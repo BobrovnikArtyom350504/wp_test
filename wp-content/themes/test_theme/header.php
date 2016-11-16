@@ -12,5 +12,3 @@
 				<h1 class="main-logo navbar-brand">Test Theme</h1>
 			</nav>
 		</header>
-</body>
-</html>
