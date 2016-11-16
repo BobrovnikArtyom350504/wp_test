@@ -72,13 +72,7 @@
     		</label>
 	    </div>
 		
-		<div class="form-check">
-		    <label class="form-check-label">
-      			<input type="checkbox" class="form-check-input" id="checkbox-1">
-      			Check me out
-    		</label>
-	    </div>
-		
+		<div class="g-recaptcha" data-sitekey="6LeEEwwUAAAAAA5fXXtGbQKU7TCLq6MHOZZF2elp"></div>
 	    <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
 	    </form>
 	    ';
