@@ -1,3 +1,7 @@
 /*
 Theme Name: test_theme
 */
+
+.main-header {
+	min-height:  100px;
+}

@@ -9,9 +9,8 @@
  * License: GPL2
  */
 
-	function create_form() { 
-	    echo '
-	    <form class="col-md-9">
+	function create_form() {
+		$form = '<form class="col-md-9">
 	    <div class="form-group">
 		    <label for="name-input">Username <strong>*</strong></label>
 		    <input type="text" name="first-name" class="form-control" placeholder="First name" id="name-input">
@@ -72,8 +71,11 @@
     		</label>
 	    </div>
 		
-		<div class="g-recaptcha" data-sitekey="6LeEEwwUAAAAAA5fXXtGbQKU7TCLq6MHOZZF2elp"></div>
+		<div class="g-recaptcha form-group" data-sitekey="6LeEEwwUAAAAAA5fXXtGbQKU7TCLq6MHOZZF2elp"></div>
 	    <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
-	    </form>
-	    ';
+	    </form>';
+	    return $form;
 	}
+
+	add_shortcode("form", "create_form");
+	
