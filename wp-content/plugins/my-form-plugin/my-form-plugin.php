@@ -37,7 +37,7 @@
 	add_shortcode("form", "create_form");
 
 	function create_form() {
-		$form = '<form class="col-md-9" type="post">
+		$form = '<form class="col-md-9">
 	    <div class="form-group">
 		    <label for="name-input">Username <strong>*</strong></label>
 		    <input type="text" name="firstName" class="form-control" placeholder="First name" id="name-input">
@@ -105,6 +105,7 @@
 	}
 
 	add_action( 'wp_footer', 'validate_form' );
+	add_action( 'wp_footer', 'set_submit_handler');
 
 	function validate_form() {
 		?>
@@ -149,13 +150,46 @@
 		<?php
 	}
 
-	add_action( 'admin_print_footer_scripts', 'my_action_javascript' );
-
-	function my_action_javascript() { ?>
-		<script type="text/javascript" >
-			jQuery(document).ready(($) => {
-			});
-		</script> <?php
+	function js_variables(){   
+	    echo(
+	        '<script type="text/javascript">window.ajax_url = "' .
+	        	admin_url('admin-ajax.php') .
+	        '";</script>'
+	    );
 	}
+
+	add_action('wp_head','js_variables');
+
+	function set_submit_handler() {
+		?>
+		<script type="text/javascript">
+		jQuery(document).ready(($) => {
+			$('form').submit((event) => {
+				event.preventDefault();
+				var profile = {};
+				profile.name = $('#name-input').val();
+				profile.surname = $('#surname-input').val();
+				profile.job = $('#job-input').val();
+				profile.company = $('#company-input').val();
+				profile.email = $('#email-input').val();
+				profile.phone = $('#phone-input').val();
+				profile.country = $('#country-select').val();
+				profile.area = $('#area-select').val();
+				window.ajax_url = window.ajax_url.replace("localhost", "127.0.0.1")
+				$.post(window.ajax_url, JSON.stringify(profile), ()=>{alert("gj")});
+			});
+		});
+		</script>
+		<?php
+	}
+
+
+	add_action('wp_ajax_my_action', 'my_action_callback');
+	add_action('wp_ajax_nopriv_my_action', 'my_action_callback');
+	function my_action_callback() {
+		$data = ( $_POST['data'] );
+		wp_die();
+	}
+
 	
 	
