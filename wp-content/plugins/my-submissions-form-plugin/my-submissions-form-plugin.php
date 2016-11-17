@@ -15,6 +15,7 @@
 
 	function submissions_plugin_scripts() {
 		wp_enqueue_style( 'plugin_styles', plugins_url( '/my-submissions-form-plugin.css', __FILE__ ));
+		wp_enqueue_script('admin_script', plugins_url( '/my-submissions-form-plugin.js', __FILE__ ), array('jquery'));
 	}
 
 	function create_submissions_table() {
@@ -38,4 +39,10 @@
 		}
 		$table = $table . "</table>";
 		return $table;
+	}
+
+	add_action('admin_menu', 'plugin_add_admin_page');
+
+	function plugin_add_admin_page() {
+  		add_menu_page( 'custom menu title', 'custom menu', 'manage_options', 'my-submissions-form-plugin/adminpage.php');
 	}
