@@ -104,92 +104,46 @@
 	    return $form;
 	}
 
-	add_action( 'wp_footer', 'validate_form' );
-	add_action( 'wp_footer', 'set_submit_handler');
+	add_action( 'wp_enqueue_scripts', 'plugin_scripts' );
 
-	function validate_form() {
-		?>
-		<script type="text/javascript" >
-			jQuery(document).ready(($) => {
-				$('form').validate({
-					rules: {
-						firstName: {
-							required: true
-						},
-
-						surname: {
-							required: true
-						},
-
-						jobTitle: {
-							required: true
-						},
-
-						company: {
-							required: true
-						},
-
-						email: {
-							required: true,
-							email: true
-						},
-
-						phone: {
-							required: true
-						}
-					}
-				});
-			});
-
-			function recaptchaCallback() {
-				jQuery(document).ready(($) => {
-    				$('#submit-button').removeAttr('disabled');
-    			});
-			};
-		</script> 
-		<?php
+	function plugin_scripts() {
+		wp_enqueue_script( 'plugin_scripts', plugins_url( '/my-form-plugin.js', __FILE__ ), array('jquery'));
+		wp_localize_script( 'plugin_scripts', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )));
 	}
 
-	function js_variables(){   
-	    echo(
-	        '<script type="text/javascript">window.ajax_url = "' .
-	        	admin_url('admin-ajax.php') .
-	        '";</script>'
-	    );
+	if ( is_admin() ) {
+	    add_action('wp_ajax_nopriv_my_action', 'my_action_callback');
+		add_action('wp_ajax_my_action', 'my_action_callback');
 	}
 
-	add_action('wp_head','js_variables');
-
-	function set_submit_handler() {
-		?>
-		<script type="text/javascript">
-		jQuery(document).ready(($) => {
-			$('form').submit((event) => {
-				event.preventDefault();
-				var profile = {};
-				profile.name = $('#name-input').val();
-				profile.surname = $('#surname-input').val();
-				profile.job = $('#job-input').val();
-				profile.company = $('#company-input').val();
-				profile.email = $('#email-input').val();
-				profile.phone = $('#phone-input').val();
-				profile.country = $('#country-select').val();
-				profile.area = $('#area-select').val();
-				window.ajax_url = window.ajax_url.replace("localhost", "127.0.0.1")
-				$.post(window.ajax_url, JSON.stringify(profile), ()=>{alert("gj")});
-			});
-		});
-		</script>
-		<?php
-	}
-
-
-	add_action('wp_ajax_my_action', 'my_action_callback');
-	add_action('wp_ajax_nopriv_my_action', 'my_action_callback');
 	function my_action_callback() {
-		$data = ( $_POST['data'] );
+		global $wpdb;
+		$wpdb->insert('wp_test_users',
+			array(
+				'name'=>$_POST['name'],
+				'surname'=>$_POST['surname'],
+				'job_title'=>$_POST['job'],
+				'company'=>$_POST['company'],
+				'email'=>$_POST['email'],
+				'phone'=>$_POST['phone'],
+				'country'=>$_POST['country'],
+				'area_select'=>$_POST['area']
+			),
+			array ( 
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s'
+			)
+		);
 		wp_die();
 	}
+
+
 
 	
 	
