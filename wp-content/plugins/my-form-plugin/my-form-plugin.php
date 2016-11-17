@@ -129,16 +129,7 @@
 				'country'=>$_POST['country'],
 				'area_select'=>$_POST['area']
 			),
-			array ( 
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-				'%s'
-			)
+			array ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )
 		);
 		wp_die();
 	}
