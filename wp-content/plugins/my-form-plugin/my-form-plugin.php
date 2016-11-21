@@ -96,11 +96,15 @@
       			<input type="checkbox" class="form-check-input" id="checkbox-2" name="checkbox2">
       			Check me out
     		</label>
-	    </div>
-		
-		<div class="g-recaptcha form-group" data-callback="recaptchaCallback" data-sitekey="6LeEEwwUAAAAAA5fXXtGbQKU7TCLq6MHOZZF2elp"></div>
-	    <input type="submit" class="btn btn-primary" id="submit-button" disabled>
-	    </form>';
+	    </div>';
+		if(get_option('isCaptchaNeed'))
+			$form = $form . 
+			'<div class="g-recaptcha form-group" data-callback="recaptchaCallback" data-sitekey="6LeEEwwUAAAAAA5fXXtGbQKU7TCLq6MHOZZF2elp">
+			</div><input type="submit" class="btn btn-primary" id="submit-button disabled">
+			</form>';
+		else
+		    $form = $form . '<input type="submit" class="btn btn-primary" id="submit-button">
+		    </form>';
 	    return $form;
 	}
 
@@ -131,10 +135,23 @@
 			),
 			array ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )
 		);
-		echo "string";
+		echo "ok";
 		wp_die();
 	}
 
+	add_action('admin_menu', 'create_settings');
+
+	function create_settings() {
+		add_menu_page('Settings Page', 'Settings Page', 'manage_options', 'my-form-plugin/setings_page.php');
+		add_action( 'admin_init', 'register_plugin_settings' );
+	}
+
+	function register_plugin_settings () {
+		register_setting('plugin-settings-group', 'isCaptchaNeed');
+	}
+
+
+	
 	
 
 

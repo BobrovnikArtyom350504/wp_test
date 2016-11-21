@@ -36,7 +36,6 @@
 	}
 
 	function setFormHandler($) {
-		console.log(window.ajax_object.ajax_url);
 		$('form').submit((event) => {
 			if($('form').valid()) {
 				event.preventDefault();
@@ -50,7 +49,7 @@
 				profile.country = $('#country-select').val();
 				profile.area = $('#area-select').val();
 				profile.action = 'submit_form';
-				$.post(window.ajax_object.ajax_url, profile, (resp)=>{ console.log(resp); });
+				$.post(window.ajax_object.ajax_url, profile, (response)=>{ console.log(response); });
 			}
 		});
 	}
