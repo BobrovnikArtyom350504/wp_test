@@ -1,4 +1,13 @@
+a {
+	text-decoration: none;
+	color: black;
+}
+
 .submissions-table  th,td {
-	padding: 0 30px;
+	padding: 0 5px;
 	text-align: center;
+}
+
+.submissions-table th {
+	cursor: pointer;
 }

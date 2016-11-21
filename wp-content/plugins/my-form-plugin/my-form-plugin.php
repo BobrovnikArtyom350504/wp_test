@@ -112,11 +112,11 @@
 	}
 
 	if ( is_admin() ) {
-	    add_action('wp_ajax_nopriv_my_action', 'my_action_callback');
-		add_action('wp_ajax_my_action', 'my_action_callback');
+	    add_action('wp_ajax_nopriv_submit_form', 'submit_form_callback');
+		add_action('wp_ajax_submit_form', 'submit_form_callback');
 	}
 
-	function my_action_callback() {
+	function submit_form_callback() {
 		global $wpdb;
 		$wpdb->insert('wp_test_users',
 			array(
@@ -131,8 +131,11 @@
 			),
 			array ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )
 		);
+		echo "string";
 		wp_die();
 	}
+
+	
 
 
 

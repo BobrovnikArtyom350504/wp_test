@@ -8,3 +8,17 @@
 	    wp_enqueue_style( 'bootstrap_styles',  get_template_directory_uri() . '/css/bootstrap.min.css');
 	    wp_enqueue_style( 'bootstrap_theme_styles',  get_template_directory_uri() . '/css/bootstrap-theme.min.css');
 	}
+
+	function init_my_widget() {
+
+	register_sidebar( array(
+		'name'          => 'Home right sidebar',
+		'id'            => 'home_right_1',
+		'before_widget' => '<div>',
+		'after_widget'  => '</div>'
+	) );
+
+}
+add_action( 'widgets_init', 'init_my_widget' );
+?>
+

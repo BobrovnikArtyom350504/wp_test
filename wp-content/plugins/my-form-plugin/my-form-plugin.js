@@ -36,7 +36,7 @@
 	}
 
 	function setFormHandler($) {
-		console.log(window.ajax_object);
+		console.log(window.ajax_object.ajax_url);
 		$('form').submit((event) => {
 			if($('form').valid()) {
 				event.preventDefault();
@@ -49,13 +49,14 @@
 				profile.phone = $('#phone-input').val();
 				profile.country = $('#country-select').val();
 				profile.area = $('#area-select').val();
-				profile.action = 'my_action';
+				profile.action = 'submit_form';
 				$.post(window.ajax_object.ajax_url, profile, (resp)=>{ console.log(resp); });
 			}
 		});
 	}
 
 })();
+
 function recaptchaCallback() {
 	jQuery(document).ready(($) => {
 		$('#submit-button').removeAttr('disabled');
