@@ -100,7 +100,7 @@
 		if(get_option('isCaptchaNeed'))
 			$form = $form . 
 			'<div class="g-recaptcha form-group" data-callback="recaptchaCallback" data-sitekey="6LeEEwwUAAAAAA5fXXtGbQKU7TCLq6MHOZZF2elp">
-			</div><input type="submit" class="btn btn-primary" id="submit-button disabled">
+			</div><input type="submit" class="btn btn-primary" id="submit-button" disabled>
 			</form>';
 		else
 		    $form = $form . '<input type="submit" class="btn btn-primary" id="submit-button">
@@ -115,7 +115,7 @@
 		wp_localize_script( 'plugin_scripts', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )));
 	}
 
-	if ( is_admin() ) {
+	if (is_admin()) {
 	    add_action('wp_ajax_nopriv_submit_form', 'submit_form_callback');
 		add_action('wp_ajax_submit_form', 'submit_form_callback');
 	}
@@ -139,10 +139,10 @@
 		wp_die();
 	}
 
-	add_action('admin_menu', 'create_settings');
+	add_action('admin_menu', 'create_settings_page');
 
-	function create_settings() {
-		add_menu_page('Settings Page', 'Settings Page', 'manage_options', 'my-form-plugin/setings_page.php');
+	function create_settings_page() {
+		add_menu_page('Settings Page', 'Form settings page', 'manage_options', 'my-form-plugin/setings_page.php');
 		add_action( 'admin_init', 'register_plugin_settings' );
 	}
 

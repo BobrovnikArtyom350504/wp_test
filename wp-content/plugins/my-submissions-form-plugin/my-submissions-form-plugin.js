@@ -2,10 +2,15 @@
 	var pageNumber = 1;
 	var orderBy = 'name';
 	jQuery(document).ready(($) => {
+		setOnCliclListeners($);
+		testResponseTime($, 'surname');
+	});
+
+	function setOnCliclListeners($) {
 		setOnSortClickListener($);
 		setOnNextClickListener($);
 		setOnPreviousClickListener($);
-	});
+	}
 
 	function setOnNextClickListener($) {
 		$('.next-page').click((event)=>{
@@ -47,6 +52,7 @@
 	}
 
 	function sentPost($, pageNumber, orderBy, onSuccess) {
+		var sendDate = (new Date()).getTime();
 		$.post(window.plugin_data.ajax_url, 
 			{ 
 				action: 'change_table',
@@ -54,10 +60,22 @@
 				order_by: orderBy
 			},
 			(response)=> {
+				var receiveDate = (new Date()).getTime();
+				console.log(`${receiveDate - sendDate} response time in ms`);
 				onSuccess(response);
 				$('.table-container').trigger('changeTable');
 			}
 		);
+	}
+
+	function testResponseTime($, sortBy) {
+		if(pageNumber < window.plugin_data.pages_count) {
+			console.log(`PAGE:${pageNumber}`);
+			sentPost($, pageNumber, sortBy, ()=>{
+				pageNumber++;
+				testResponseTime($, sortBy);
+			})
+		}
 	}
 
 })();

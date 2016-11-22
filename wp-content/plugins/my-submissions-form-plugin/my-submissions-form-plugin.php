@@ -14,7 +14,7 @@
 	add_action('admin_menu', 'plugin_add_admin_page');
 
 	function plugin_add_admin_page() {
-  		add_menu_page( 'submissions', 'submissions menu', 'manage_options', 'my-submissions-form-plugin/adminpage.php');
+  		add_menu_page( 'submissions', 'Submissions admin page', 'manage_options', 'my-submissions-form-plugin/adminpage.php');
 	}
 
 	if ( is_admin() ) {
@@ -28,9 +28,11 @@
 		$order_by = $_POST['order_by'];
 		$page_number = $_POST['page_number'];
 		$table_name = $wpdb->prefix . "test_users";
-		$items_per_page = 5;
+		$items_per_page = 1000;
 		$offset = $page_number * $items_per_page - $items_per_page;
-		$query =  "SELECT * FROM " . $table_name . " ORDER BY " . $order_by  . " LIMIT "  . $items_per_page . " OFFSET " . $offset;
+		$query =  "SELECT " . $table_name .  ".* FROM " . $table_name . 
+		" INNER JOIN(SELECT " . $order_by . ",id FROM " . $table_name .
+		" ORDER BY " . $order_by . " LIMIT " . $offset . "," . $items_per_page . ") AS a ON " . $table_name . ".id = a.id";
 		$retrieve_data = $wpdb->get_results($query);
 
 		$table = "<table class='submissions-table'><thead><tr>";
@@ -57,7 +59,7 @@
 		wp_enqueue_style('plugin_style', plugins_url( '/my-submissions-form-plugin.css', __FILE__ ));
 		wp_enqueue_script('plugin_scripts', plugins_url( '/my-submissions-form-plugin.js', __FILE__ ), array('jquery'));
 		global $wpdb;
-		$items_per_page = 5;
+		$items_per_page = 1000;
 		$items_count = $wpdb->get_results("SELECT id FROM " . $wpdb->prefix . "test_users ORDER BY id DESC LIMIT 1")[0]->id;
 		$pages_count = (int)($items_count / $items_per_page);
 		if($items_count % $items_per_page > 0) {
@@ -80,14 +82,14 @@
 		public function widget( $args, $instance ) {
 			global $wpdb;
 			$table_name = $wpdb->prefix . "test_users";
-			$users = $wpdb->get_results("SELECT * FROM " . $table_name . " ORDER BY id LIMIT 10");
+			$users = $wpdb->get_results("SELECT * FROM " . $table_name . " ORDER BY id DESC LIMIT 100");
 			$table = "<table class='table'><thead><th>name</th><th>surname</th><th>email</th><th>phone</th></thead><tbody>";
 			foreach ($users as $number => $user) {
 				$table = $table . "<tr><td>" . $user->name . "</td>" . "<td>" . $user->surname . "</td>" . "<td>" . $user->email . "</td>" . "<td>" . $user->phone . "</td></tr>";
 			}
 			$table = $table . "</tbody></table>";
 			echo $table ;
-
+			wp_die();
 		}
 
 		public function form( $instance ) {}

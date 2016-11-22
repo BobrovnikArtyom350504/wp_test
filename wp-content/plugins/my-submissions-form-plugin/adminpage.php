@@ -1,17 +1,19 @@
 <h1>ADMIN SUBMISSIONS PLUGIN PAGE</h1>
-<div class='page-controller'>
-	<a class='previous-page' href='#'> <- </a>
-		<span class='page-number'>1</span>
-	<a href='#' class='next-page'> -> </a>
-</div>
-<div class="table-container">
+<div class="wrapper">
+	<div class="table-container">
+	</div>
+	<div class='page-controller'>
+		<a class='previous-page' href='#'> <- </a>
+			<span class='page-number'>1</span>
+		<a href='#' class='next-page'> -> </a>
+	</div>
 </div>
 
 <?php
 
-	add_action( 'admin_footer', 'admin_open_javascript' );
+	add_action( 'admin_footer', 'admin_page_javascript' );
 
-	function admin_open_javascript() { ?>
+	function admin_page_javascript() { ?>
 		<script type="text/javascript" >
 		jQuery(document).ready(function($) {
 			var changeTableEvent = new Event('changeTable');
