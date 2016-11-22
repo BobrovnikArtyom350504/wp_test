@@ -82,7 +82,7 @@
 		public function widget( $args, $instance ) {
 			global $wpdb;
 			$table_name = $wpdb->prefix . "test_users";
-			$users = $wpdb->get_results("SELECT * FROM " . $table_name . " ORDER BY id DESC LIMIT 100");
+			$users = $wpdb->get_results("SELECT * FROM " . $table_name . " ORDER BY id DESC LIMIT 10");
 			$table = "<table class='table'><thead><th>name</th><th>surname</th><th>email</th><th>phone</th></thead><tbody>";
 			foreach ($users as $number => $user) {
 				$table = $table . "<tr><td>" . $user->name . "</td>" . "<td>" . $user->surname . "</td>" . "<td>" . $user->email . "</td>" . "<td>" . $user->phone . "</td></tr>";

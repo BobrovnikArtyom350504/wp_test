@@ -3,7 +3,7 @@
 	var orderBy = 'name';
 	jQuery(document).ready(($) => {
 		setOnCliclListeners($);
-		testResponseTime($, 'surname');
+		// testResponseTime($, 'surname');
 	});
 
 	function setOnCliclListeners($) {

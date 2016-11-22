@@ -1,12 +1,11 @@
 <h1>ADMIN SUBMISSIONS PLUGIN PAGE</h1>
 <div class="wrapper">
-	<div class="table-container">
-	</div>
 	<div class='page-controller'>
 		<a class='previous-page' href='#'> <- </a>
 			<span class='page-number'>1</span>
 		<a href='#' class='next-page'> -> </a>
 	</div>
+	<div class="table-container"></div>
 </div>
 
 <?php
